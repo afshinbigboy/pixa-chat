@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Sign-in | Fanasa Chat
+{% endblock %}
+
+
+{% block content %}
+  <form class="" action="{% url 'account:sign_in' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        {{ field.label_tag }}
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Log in</button>
+  </form>
+  <p>Don't have an account? <a href="{% url 'account:sign_up' %}">Sign up!</a></p>
+{% endblock %}
