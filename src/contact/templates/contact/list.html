@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Contacts | Fanasa Chat
+{% endblock %}
+
+
+{% block content %}
+
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+            <div class="alert alert-success alert-dismissible">
+                {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-danger alert-dismissible">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+
+    <div class="row mb-5">
+        <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <h3>Add contact</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input name="contact_username" class="form-control mt-3" type="text" size="100" placeholder="Enter Username"/>
+                <button class="btn btn-primary my-2 w-100" type="submit"/>Add</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+    
+    <div class="mt-5">
+        {% if contacts %}
+            {% for contact in contacts %}
+                <div class='mb-3'>
+                    {{ forloop.counter }}. 
+                    {{contact.user.get_full_name}} 
+                    <span class="text-muted font-weight-light">(@{{contact.user.username}})</span>
+
+                    {% if contact.is_online %}
+                        <span class="small text-success">  online</span>
+                    {% else %}
+                        <span class="small text-muted">  offline</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            No Contact.
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+{% block extra_script %}
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = 'rooms/' + roomName + '/';
+        };
+    </script>
+{% endblock %}

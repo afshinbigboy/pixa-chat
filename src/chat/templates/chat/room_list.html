@@ -2,26 +2,33 @@
 
 
 {% block title %}
-Home | Fanasa Chat
+Public Chat | Fanasa Chat
 {% endblock %}
 
 
 {% block content %}
-    What chat room would you like to enter?<br/>
-    <input id="room-name-input" type="text" size="100"/><br/>
-    <input id="room-name-submit" type="button" value="Enter"/>
+    <div class="row mb-5">
+        <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            What group would you like to enter?
+            <input id="room-name-input" class="form-control mt-3" type="text" size="100"/>
+            <input id="room-name-submit" class="btn btn-primary my-2 w-100" type="button" value="Enter"/>
+        </div>
+    </div>
 
+    <hr>
+    
     <div class="mt-5">
         {% if rooms %}
             {% for room in rooms %}
+                {{ forloop.counter }}. 
                 <a href="/rooms/{{room.name}}/">
                     {{room.name}}
                 </a>
-                <span>  online:{{room.onlines}}</span>
+                <span class="text-muted small">  (online: {{room.onlines}})</span>
                 <br>
             {% endfor %}
         {% else %}
-            No Available Room.
+            No Available Group.
         {% endif %}
     </div>
 {% endblock %}

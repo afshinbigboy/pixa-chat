@@ -103,7 +103,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        user = '{} ({})'.format(self.user.get_full_name(), self.user.username)
+        user = '{} (@{})'.format(self.user.get_full_name(), self.user.username)
 
         # Send message to room group
         await self.channel_layer.group_send(
